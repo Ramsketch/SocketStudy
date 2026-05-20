@@ -54,61 +54,54 @@ Socket programming finds applications in various domains, including web developm
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
 
    
-## SERVER.PY:
+## PROGRAM:
+CLIENT:
 ```
-import socket
+import socket  
 
-s = socket.socket()
-s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)  # avoid port error
-s.bind(('localhost', 9000))   # use 9000 to avoid conflict
-s.listen(5)
+s = socket.socket()  
+s.bind(('localhost',8000))  
+s.listen(5)  
 
-print("Waiting for connection...")
-c, addr = s.accept()
-print("Connected to:", addr)
+c, addr = s.accept() 
 
-while True:
-    i = input("Enter a data: ")
-
-    if i.lower() == "exit":
+while True:  
+    i = input("Enter a data: ")  
+    
+    c.send(i.encode())  
+    
+    ack = c.recv(1024).decode()  
+    
+    if ack: 
+        print(ack)  
+        continue  
+    
+    else:  
+        c.close()  
         break
-
-    c.send(i.encode())
-
-    ack = c.recv(1024).decode()
-
-    if ack:
-        print("Client:", ack)
-    else:
-        break
-
-c.close()
-s.close()
 ```
-
-## CLIENT.PY:
+SERVER:
 ```
-import socket
+import socket  
 
-s = socket.socket()
-s.connect(('localhost', 9000))
+s = socket.socket()  
+s.connect(('localhost',8000))  
 
-while True:
-    data = s.recv(1024).decode()
-    print("Server:", data)
-
-    reply = input("Reply: ")
-    s.send(reply.encode())
+while True:  
+    print(s.recv(1024).decode()) 
+    
+    s.send("Acknowledgement Received".encode())
 ```
 
 ## OUTPUT:
 
-SERVER:
-<img width="863" height="341" alt="Screenshot 2026-04-25 095116" src="https://github.com/user-attachments/assets/eee58329-4551-4641-bdda-4b0945330e54" />
+
 CLIENT:
-<img width="866" height="317" alt="Screenshot 2026-04-25 095133" src="https://github.com/user-attachments/assets/123461aa-f1ea-4390-adc3-6a8f5964c64d" />
+<img width="941" height="931" alt="image" src="https://github.com/user-attachments/assets/98e4f10c-6536-4d30-9275-deccce45c38e" />
 
 
+SERVER:
+<img width="954" height="944" alt="image" src="https://github.com/user-attachments/assets/9f159a79-3a81-4b76-a17b-acc437624fe3" />
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
