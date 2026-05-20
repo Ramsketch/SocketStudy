@@ -55,53 +55,10 @@ Socket programming finds applications in various domains, including web developm
 
    
 ## PROGRAM:
-CLIENT:
-```
-import socket  
-
-s = socket.socket()  
-s.bind(('localhost',8000))  
-s.listen(5)  
-
-c, addr = s.accept() 
-
-while True:  
-    i = input("Enter a data: ")  
-    
-    c.send(i.encode())  
-    
-    ack = c.recv(1024).decode()  
-    
-    if ack: 
-        print(ack)  
-        continue  
-    
-    else:  
-        c.close()  
-        break
-```
-SERVER:
-```
-import socket  
-
-s = socket.socket()  
-s.connect(('localhost',8000))  
-
-while True:  
-    print(s.recv(1024).decode()) 
-    
-    s.send("Acknowledgement Received".encode())
-```
 
 ## OUTPUT:
 
 
-CLIENT:
-<img width="941" height="931" alt="image" src="https://github.com/user-attachments/assets/98e4f10c-6536-4d30-9275-deccce45c38e" />
-
-
-SERVER:
-<img width="954" height="944" alt="image" src="https://github.com/user-attachments/assets/9f159a79-3a81-4b76-a17b-acc437624fe3" />
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
