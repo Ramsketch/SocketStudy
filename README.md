@@ -55,9 +55,73 @@ Socket programming finds applications in various domains, including web developm
 
    
 ## PROGRAM:
+SERVER PROGRAM:
+```
+import socket
+
+# Create socket
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind socket to IP and port
+host = '127.0.0.1'
+port = 12345
+server_socket.bind((host, port))
+
+# Listen for connections
+server_socket.listen(1)
+print("Server is waiting for connection...")
+
+# Accept client connection
+conn, addr = server_socket.accept()
+print("Connected to:", addr)
+
+# Receive data from client
+data = conn.recv(1024).decode()
+print("Client says:", data)
+
+# Send response to client
+message = "Hello Client, message received!"
+conn.send(message.encode())
+
+# Close connection
+conn.close()
+server_socket.close()
+```
+
+CLIENT PROGRAM:
+```
+import socket
+
+# Create socket
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect to server
+host = '127.0.0.1'
+port = 12345
+client_socket.connect((host, port))
+
+# Send message to server
+message = "Hello Server!"
+client_socket.send(message.encode())
+
+# Receive response from server
+data = client_socket.recv(1024).decode()
+print("Server says:", data)
+
+# Close socket
+client_socket.close()
+```
 
 ## OUTPUT:
 
+SERVER:
+
+<img width="955" height="962" alt="image" src="https://github.com/user-attachments/assets/84791a17-9372-4c8f-9501-90fb16476a35" />
+
+
+CLIENT:
+
+<img width="946" height="969" alt="image" src="https://github.com/user-attachments/assets/32e0603a-48b6-497e-8e5f-e39a63ed7e5c" />
 
 
 ## Result:
